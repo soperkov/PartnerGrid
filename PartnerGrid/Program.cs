@@ -1,3 +1,5 @@
+using PartnerGrid.Databases;
+
 namespace PartnerGrid
 {
     public class Program
@@ -8,6 +10,10 @@ namespace PartnerGrid
 
             // Add services to the container.
             builder.Services.AddRazorPages();
+
+            builder.Services.AddSingleton<DapperDbContext>();
+
+            builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
 
@@ -26,7 +32,9 @@ namespace PartnerGrid
 
             app.UseAuthorization();
 
-            app.MapRazorPages();
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
         }

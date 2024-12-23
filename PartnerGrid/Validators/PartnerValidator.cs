@@ -21,12 +21,12 @@ namespace PartnerGrid.Validators
                 .Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("Partner number must not be empty.")
                 .Length(20).WithMessage("Partner must have exactly 20 characters")
-                .Matches(@"^\d{20}$").WithMessage("Partner Number must contain only numeric characters.");
+                .Matches(@"^\d$").WithMessage("Partner Number must contain only numeric characters.");
 
             RuleFor(partner => partner.CroatianPin)
                 .Cascade(CascadeMode.Stop)
                 .Length(11).WithMessage("OIB must have exactly 11 characters.")
-                .Matches(@"^\d{11}$").WithMessage("OIB must contain only numeric characters.");
+                .Matches(@"^\d$").WithMessage("OIB must contain only numeric characters.");
 
             RuleFor(partner => partner.PartnerTypeId)
                 .Cascade(CascadeMode.Stop)
