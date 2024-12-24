@@ -1,4 +1,9 @@
 using PartnerGrid.Databases;
+using FluentValidation;
+using Microsoft.AspNetCore.Identity;
+using PartnerGrid.Validators;
+using PartnerGrid.Interfaces;
+using PartnerGrid.Models;
 
 namespace PartnerGrid
 {
@@ -14,6 +19,14 @@ namespace PartnerGrid
             builder.Services.AddSingleton<DapperDbContext>();
 
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddScoped<IRepository<PartnerModel>, PartnerRepository>();
+
+            builder.Services.AddScoped<IRepository<PolicyModel>, PolicyRepository>();
+
+            builder.Services.AddValidatorsFromAssemblyContaining<PartnerValidator>();
+
+            builder.Services.AddValidatorsFromAssemblyContaining<PolicyValidator>();
 
             var app = builder.Build();
 

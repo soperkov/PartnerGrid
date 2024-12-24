@@ -1,10 +1,11 @@
 ﻿using Dapper;
 using PartnerGrid.Models;
+using PartnerGrid.Interfaces;
 
 
 namespace PartnerGrid.Databases
 {
-    public class PartnerRepository
+    public class PartnerRepository : IRepository<PartnerModel>
     {
         private readonly DapperDbContext _dbContext;
 
@@ -13,7 +14,7 @@ namespace PartnerGrid.Databases
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<PartnerModel>> GetAllPartnersAsync()
+        public async Task<IEnumerable<PartnerModel>> GetAllAsync()
         {
             var query = "SELECT * FROM Partners";
 
@@ -23,7 +24,7 @@ namespace PartnerGrid.Databases
             }
         }
 
-        public async Task<PartnerModel> GetPartnerByIdAsync(int partnerId)
+        public async Task<PartnerModel> GetByIdAsync(int partnerId)
         {
             var query = "SELECT * FROM Partners WHERE PartnerId = @PartnerId";
 
@@ -33,7 +34,7 @@ namespace PartnerGrid.Databases
             }
         }
 
-        public async Task<int> CreatePartnerAsync(PartnerModel partner)
+        public async Task<int> CreateAsync(PartnerModel partner)
         {
             var query = @"
                 INSERT INTO Partners (
@@ -70,7 +71,7 @@ namespace PartnerGrid.Databases
             }
         }
 
-        public async Task UpdatePartnerAsync(PartnerModel partner)
+        public async Task UpdateAsync(PartnerModel partner)
         {
             var query = @"
                 UPDATE Partners
@@ -94,7 +95,7 @@ namespace PartnerGrid.Databases
             }
         }
 
-        public async Task DeletePartnerAsync(int partnerId)
+        public async Task DeleteAsync(int partnerId)
         {
             var query = "DELETE FROM Partners WHERE PartnerId = @PartnerId";
 

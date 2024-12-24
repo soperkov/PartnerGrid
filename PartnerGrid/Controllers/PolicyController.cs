@@ -5,53 +5,54 @@ using PartnerGrid.Models;
 
 namespace PartnerGrid.Controllers
 {
-    public class PartnerController : Controller
+    public class PolicyController : Controller
     {
-        private readonly IRepository<PartnerModel> _partnerRepository;
+        private readonly IRepository<PolicyModel> _policyRepository;
 
-        public PartnerController (IRepository<PartnerModel> partnerRepository)
+        public PolicyController(IRepository<PolicyModel> policyRepository)
         {
-            _partnerRepository = partnerRepository;
-        }   
+            _policyRepository = policyRepository;
+        }
+
 
         public async Task<IActionResult> Index()
         {
-            var partners = await _partnerRepository.GetAllAsync();
-            return View(partners);
+            var policies = await _policyRepository.GetAllAsync();
+            return View(policies);
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            var partner = await _partnerRepository.GetByIdAsync(id);
-            if (partner == null)
+            var policy = await _policyRepository.GetByIdAsync(id);
+            if (policy == null)
             {
                 return NotFound();
             }
-            return View(partner);
+            return View(policy);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(PartnerModel model)
+        public async Task<IActionResult> Create(PolicyModel model)
         {
             if (ModelState.IsValid)
             {
-                await _partnerRepository.CreateAsync(model);
+                await _policyRepository.CreateAsync(model);
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, PartnerModel model)
+        public async Task<IActionResult> Edit(int id, PolicyModel model)
         {
-            if (id != model.PartnerId)
+            if (id != model.PolicyId)
             {
                 return BadRequest();
             }
 
             if (ModelState.IsValid)
             {
-                await _partnerRepository.UpdateAsync(model);
+                await _policyRepository.UpdateAsync(model);
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
@@ -60,7 +61,7 @@ namespace PartnerGrid.Controllers
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _partnerRepository.DeleteAsync(id);
+            await _policyRepository.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
     }
