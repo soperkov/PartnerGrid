@@ -5,63 +5,83 @@ using PartnerGrid.Models;
 
 namespace PartnerGrid.Controllers
 {
-    public class PartnerController : Controller
+    [ApiController]
+    [Route("api/[controller]")]
+    public class PartnerController : ControllerBase
     {
         private readonly IRepository<PartnerModel> _partnerRepository;
 
         public PartnerController (IRepository<PartnerModel> partnerRepository)
         {
             _partnerRepository = partnerRepository;
-        }   
-
-        public async Task<IActionResult> Index()
-        {
-            var partners = await _partnerRepository.GetAllAsync();
-            return View(partners);
         }
 
-        public async Task<IActionResult> Details(int id)
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var partners = await _partnerRepository.GetAllAsync();
+            return Ok(partners);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
         {
             var partner = await _partnerRepository.GetByIdAsync(id);
             if (partner == null)
             {
-                return NotFound();
+                return NotFound(new { Message = $"Partner with ID {id} not found." });
             }
-            return View(partner);
+            return Ok(partner);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(PartnerModel model)
+        public async Task<IActionResult> Create([FromBody] PartnerModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                await _partnerRepository.CreateAsync(model);
-                return RedirectToAction(nameof(Index));
+                return BadRequest(ModelState);
             }
-            return View(model);
+
+            var newPartnerId = await _partnerRepository.CreateAsync(model);
+            return CreatedAtAction(nameof(GetById), new { id = newPartnerId }, model);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Edit(int id, PartnerModel model)
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] PartnerModel model)
         {
             if (id != model.PartnerId)
             {
-                return BadRequest();
+                return BadRequest(new { Message = "Partner ID mismatch." });
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                await _partnerRepository.UpdateAsync(model);
-                return RedirectToAction(nameof(Index));
+                return BadRequest(ModelState);
             }
-            return View(model);
+
+            var existingPartner = await _partnerRepository.GetByIdAsync(id);
+            if (existingPartner == null)
+            {
+                return NotFound(new { Message = $"Partner with ID {id} not found." });
+            }
+
+            await _partnerRepository.UpdateAsync(model);
+            return NoContent();
         }
 
-        [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
+            var existingPartner = await _partnerRepository.GetByIdAsync(id);
+            if (existingPartner == null)
+            {
+                return NotFound(new { Message = $"Partner with ID {id} not found." });
+            }
+
             await _partnerRepository.DeleteAsync(id);
-            return RedirectToAction(nameof(Index));
+            return NoContent();
         }
     }
 }

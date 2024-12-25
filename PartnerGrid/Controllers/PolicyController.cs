@@ -5,7 +5,9 @@ using PartnerGrid.Models;
 
 namespace PartnerGrid.Controllers
 {
-    public class PolicyController : Controller
+    [ApiController]
+    [Route("api/[controller]")]
+    public class PolicyController : ControllerBase
     {
         private readonly IRepository<PolicyModel> _policyRepository;
 
@@ -15,54 +17,71 @@ namespace PartnerGrid.Controllers
         }
 
 
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
         {
             var policies = await _policyRepository.GetAllAsync();
-            return View(policies);
+            return Ok(policies);
         }
 
-        public async Task<IActionResult> Details(int id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
         {
             var policy = await _policyRepository.GetByIdAsync(id);
             if (policy == null)
             {
-                return NotFound();
+                return NotFound(new { Message = $"Policy with ID {id} not found." });
             }
-            return View(policy);
+            return Ok(policy);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(PolicyModel model)
+        public async Task<IActionResult> Create([FromBody] PolicyModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                await _policyRepository.CreateAsync(model);
-                return RedirectToAction(nameof(Index));
+                return BadRequest(ModelState);
             }
-            return View(model);
+
+            var newPolicyId = await _policyRepository.CreateAsync(model);
+            return CreatedAtAction(nameof(GetById), new { id = newPolicyId }, model);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Edit(int id, PolicyModel model)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] PolicyModel model)
         {
             if (id != model.PolicyId)
             {
-                return BadRequest();
+                return BadRequest(new { Message = "Policy ID mismatch." });
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                await _policyRepository.UpdateAsync(model);
-                return RedirectToAction(nameof(Index));
+                return BadRequest(ModelState);
             }
-            return View(model);
+
+            var existingPolicy = await _policyRepository.GetByIdAsync(id);
+            if (existingPolicy == null)
+            {
+                return NotFound(new { Message = $"Policy with ID {id} not found." });
+            }
+
+            await _policyRepository.UpdateAsync(model);
+            return NoContent();
         }
 
-        [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
+            var existingPolicy = await _policyRepository.GetByIdAsync(id);
+            if (existingPolicy == null)
+            {
+                return NotFound(new { Message = $"Policy with ID {id} not found." });
+            }
+
             await _policyRepository.DeleteAsync(id);
-            return RedirectToAction(nameof(Index));
+            return NoContent();
         }
     }
 }

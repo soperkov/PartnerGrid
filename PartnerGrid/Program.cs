@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Identity;
 using PartnerGrid.Validators;
 using PartnerGrid.Interfaces;
 using PartnerGrid.Models;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.OpenApi.Models;
 
 namespace PartnerGrid
 {
@@ -28,7 +30,14 @@ namespace PartnerGrid
 
             builder.Services.AddValidatorsFromAssemblyContaining<PolicyValidator>();
 
+            builder.Services.AddEndpointsApiExplorer();
+
+            builder.Services.AddSwaggerGen();
+
             var app = builder.Build();
+
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
