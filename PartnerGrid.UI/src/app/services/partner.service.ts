@@ -21,7 +21,7 @@ export interface Partner {
 })
 export class PartnerService {
 
-  private baseUrl = '/api/PartnerApi';
+  private baseUrl = '/api/Partner';
 
   constructor(private http: HttpClient) { }
 

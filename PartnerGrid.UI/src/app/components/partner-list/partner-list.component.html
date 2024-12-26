@@ -1,1 +1,23 @@
-<p>partner-list works!</p>
+<h1>Partner List</h1>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let partner of partners">
+      <td>{{ partner.partnerId }}</td>
+      <td>{{ partner.firstName }}</td>
+      <td>{{ partner.lastName }}</td>
+      <td>
+        <button (click)="viewPartner(partner.partnerId)">View</button>
+        <button (click)="editPartner(partner.partnerId)">Edit</button>
+        <button (click)="deletePartner(partner.partnerId)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

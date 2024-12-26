@@ -1,0 +1,11 @@
+<h1>Partner Details</h1>
+<div *ngIf="partner; else noPartner">
+  <p><strong>First Name:</strong> {{ partner.firstName }}</p>
+  <p><strong>Last Name:</strong> {{ partner.lastName }}</p>
+  <p><strong>Address:</strong> {{ partner.address }}</p>
+  <p><strong>Partner Number:</strong> {{ partner.partnerNumber }}</p>
+</div>
+<ng-template #noPartner>
+  <p>No partner found.</p>
+</ng-template>
+<a routerLink="/partners">Back to List</a>
