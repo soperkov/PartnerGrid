@@ -10,6 +10,8 @@ import { PartnerListComponent } from './components/partner-list/partner-list.com
 import { PartnerDetailComponent } from './components/partner-detail/partner-detail.component';
 import { PartnerCreateComponent } from './components/partner-create/partner-create.component';
 import { PartnerEditComponent } from './components/partner-edit/partner-edit.component';
+import { PolicyListModalComponent } from './components/policy-list-modal/policy-list-modal.component';
+import { PolicyFormComponent } from './components/policy-form/policy-form.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { PartnerEditComponent } from './components/partner-edit/partner-edit.com
     PartnerListComponent,
     PartnerDetailComponent,
     PartnerCreateComponent,
-    PartnerEditComponent
+    PartnerEditComponent,
+    PolicyListModalComponent,
+    PolicyFormComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,9 @@
+<div>
+  <label for="policyNumber">Policy Number:</label>
+  <input id="policyNumber" [(ngModel)]="policyNumber" required />
+
+  <label for="policyAmount">Policy Amount:</label>
+  <input id="policyAmount" type="number" [(ngModel)]="policyAmount" required />
+
+  <button (click)="savePolicy()">Save</button>
+</div>

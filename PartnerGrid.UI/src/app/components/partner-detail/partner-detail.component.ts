@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PartnerService, Partner } from 'src/app/services/partner.service';
+import { PartnerService } from 'src/app/services/partner.service';
+import { Partner } from 'src/app/models/partner.model';
 
 @Component({
   selector: 'app-partner-detail',

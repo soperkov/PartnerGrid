@@ -1,0 +1,25 @@
+<div *ngIf="showModal" class="modal">
+  <div class="modal-content">
+    <h2>Policies</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Policy Number</th>
+          <th>Amount</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let policy of policies">
+          <td>{{ policy.policyNumber }}</td>
+          <td>{{ policy.policyAmount }}</td>
+          <td>
+            <button (click)="editPolicy(policy)">Edit</button>
+            <button (click)="deletePolicy(policy.policyId)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button (click)="closeModal()">Close</button>
+  </div>
+</div>
