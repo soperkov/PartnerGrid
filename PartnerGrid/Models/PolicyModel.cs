@@ -11,7 +11,5 @@ namespace PartnerGrid.Models
 
         public decimal PolicyAmount { get; set; }
 
-        public  PartnerModel Partner { get; set; }
-
     }
 }
