@@ -16,23 +16,43 @@ namespace PartnerGrid.Databases
 
         public async Task<IEnumerable<PartnerModel>> GetAllAsync()
         {
-            var query = "SELECT * FROM Partners";
+            var query = @"
+                SELECT 
+                    p.*,
+                    COUNT(pl.PolicyId) AS PolicyCount,
+                    COALESCE(SUM(pl.PolicyAmount), 0) AS TotalPolicyAmount
+                FROM Partners p
+                LEFT JOIN Policies pl ON p.PartnerId = pl.PartnerId
+                GROUP BY p.PartnerId, p.FirstName, p.LastName, p.Address, p.PartnerNumber, 
+                         p.CroatianPin, p.PartnerTypeId, p.CreatedAtUtc, 
+                         p.CreateByUser, p.IsForeign, p.ExternalCode, p.Gender";
 
             using (var connection = _dbContext.CreateConnection())
             {
-                return (await connection.QueryAsync<PartnerModel>(query)).ToList();
+                return await connection.QueryAsync<PartnerModel>(query);
             }
         }
 
-        public async Task<PartnerModel> GetByIdAsync(int partnerId)
+        public async Task<PartnerModel> GetByIdAsync(int id)
         {
-            var query = "SELECT * FROM Partners WHERE PartnerId = @PartnerId";
+            var query = @"
+                SELECT 
+                    p.*,
+                    COUNT(pl.PolicyId) AS PolicyCount,
+                    COALESCE(SUM(pl.PolicyAmount), 0) AS TotalPolicyAmount
+                FROM Partners p
+                LEFT JOIN Policies pl ON p.PartnerId = pl.PartnerId
+                WHERE p.PartnerId = @PartnerId
+                GROUP BY p.PartnerId, p.FirstName, p.LastName, p.Address, p.PartnerNumber, 
+                         p.CroatianPin, p.PartnerTypeId, p.CreatedAtUtc, 
+                         p.CreateByUser, p.IsForeign, p.ExternalCode, p.Gender";
 
             using (var connection = _dbContext.CreateConnection())
             {
-                return (await connection.QuerySingleOrDefaultAsync<PartnerModel>(query, new { PartnerId = partnerId }));
+                return await connection.QuerySingleOrDefaultAsync<PartnerModel>(query, new { PartnerId = id });
             }
         }
+
 
         public async Task<int> CreateAsync(PartnerModel partner)
         {

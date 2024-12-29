@@ -24,6 +24,10 @@
 
         public string ExternalCode { get; set; }
 
+        public int PolicyCount { get; set; }
+
+        public double TotalPolicyAmount { get; set; }
+
         public char Gender { get; set; }
 
     }

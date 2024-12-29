@@ -1,23 +1,43 @@
-<h1>Partner List</h1>
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let partner of partners">
-      <td>{{ partner.partnerId }}</td>
-      <td>{{ partner.firstName }}</td>
-      <td>{{ partner.lastName }}</td>
-      <td>
-        <button (click)="viewPartner(partner.partnerId)">View</button>
-        <button (click)="editPartner(partner.partnerId)">Edit</button>
-        <button (click)="deletePartner(partner.partnerId)">Delete</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between mb-3">
+    <button class="btn btn-primary" (click)="navigateToCreatePartner()">Add New Partner</button>
+    <button class="btn btn-secondary" (click)="openPolicyDialog()">Add Policy</button>
+  </div>
+
+  <table class="table table-striped table-bordered">
+    <thead class="thead-dark">
+      <tr>
+        <th>Full Name</th>
+        <th>Partner Number</th>
+        <th>Croatian PIN</th>
+        <th>Partner type</th>
+        <th>Time created</th>
+        <th>Is Foreign</th>
+        <th>Gender</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let partner of partners"
+          [ngClass]="{'table-warning': partner.policyCount > 5 || partner.totalPolicyAmount > 5000}"
+          (click)="showDetails(partner)">
+        <td>
+          <span *ngIf="partner.policyCount > 5 || partner.totalPolicyAmount > 5000">*</span>
+          {{ partner.fullName }}
+        </td>
+        <td>{{ partner.partnerNumber }}</td>
+        <td>{{ partner.croatianPin }}</td>
+        <td>{{ partner.partnerTypeId === 1 ? 'Personal' : 'Legal' }}</td>
+        <td>{{ partner.createdAtUtc }}</td>
+        <td>{{ partner.isForeign === false ? 'Not foreign' : 'Foreign' }}</td>
+        <td>{{ partner.gender }}</td>
+        <td>
+          <button class="btn btn-info btn-sm" (click)="editPartner(partner)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deletePartner(partner.partnerId, $event)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <app-partner-detail [partner]="selectedPartner"></app-partner-detail>
+</div>

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PartnerService } from 'src/app/services/partner.service';
 import { Partner } from 'src/app/models/partner.model';
+import { PartnerDetailComponent } from '../partner-detail/partner-detail.component';
 
 @Component({
   selector: 'app-partner-list',
@@ -12,42 +12,54 @@ import { Partner } from 'src/app/models/partner.model';
 })
 export class PartnerListComponent implements OnInit {
   partners: Partner[] = [];
+  selectedPartner: Partner | null = null;
 
-  constructor(
-    private partnerService: PartnerService,
-    private router: Router
-  ) { }
+  @ViewChild(PartnerDetailComponent) partnerDetailComponent!: PartnerDetailComponent;
+
+  constructor(private partnerService: PartnerService) { }
 
   ngOnInit(): void {
+    this.loadPartners();
+  }
 
+  loadPartners(): void {
     this.partnerService.getAllPartners().subscribe({
       next: (data) => {
-        this.partners = data; 
+        this.partners = data.map((partner) => ({
+          ...partner,
+          fullName: `${partner.firstName} ${partner.lastName}`
+        }));
       },
-      error: (error) => {
-        console.error('Error fetching partners:', error);
-      },
+      error: (error) => console.error('Error fetching partners:', error)
     });
   }
 
-  viewPartner(partnerId: number): void {
-    this.router.navigate(['/partners', partnerId]);
+  showDetails(partner: Partner): void {
+    this.selectedPartner = partner;
+    this.partnerDetailComponent.openModal();
   }
-  
-  editPartner(partnerId: number): void {
-    this.router.navigate(['/partners/edit', partnerId]);
+
+  navigateToCreatePartner(): void {
+    console.log('Navigating to create partner form...');
   }
-  
-  deletePartner(partnerId: number): void {
+
+  openPolicyDialog(): void {
+    console.log('Opening policy dialog...');
+  }
+
+  editPartner(partner: Partner): void {
+    console.log('Editing partner:', partner);
+  }
+
+  deletePartner(partnerId: number, event: Event): void {
+    event.stopPropagation(); 
     if (confirm('Are you sure you want to delete this partner?')) {
       this.partnerService.deletePartner(partnerId).subscribe({
         next: () => {
           this.partners = this.partners.filter((partner) => partner.partnerId !== partnerId);
           console.log('Partner deleted successfully.');
         },
-        error: (error) => {
-          console.error('Error deleting partner:', error);
-        }
+        error: (error) => console.error('Error deleting partner:', error)
       });
     }
   }

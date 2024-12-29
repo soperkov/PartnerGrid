@@ -1,4 +1,5 @@
 export interface Partner {
+
   partnerId: number;
   firstName: string;
   lastName: string;
@@ -12,4 +13,7 @@ export interface Partner {
   isForeign: boolean;
   externalCode: string | null;
   gender: 'M' | 'F' | 'N';
+  policyCount: number;
+  totalPolicyAmount: number;
+
 }
