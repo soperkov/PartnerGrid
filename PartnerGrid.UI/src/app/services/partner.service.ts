@@ -21,7 +21,7 @@ export class PartnerService {
   }
 
   createPartner(partner: Partner): Observable<Partner> {
-    return this.http.post<Partner>(this.baseUrl, partner);
+    return this.http.post<Partner>(`${this.baseUrl}/Partner`, partner);
   }
 
   updatePartner(id: number, partner: Partner): Observable<void> {

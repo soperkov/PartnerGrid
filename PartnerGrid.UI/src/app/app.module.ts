@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PartnerListComponent } from './components/partner-list/partner-list.component'
 import { PartnerDetailComponent } from './components/partner-detail/partner-detail.component';
 import { PartnerCreateComponent } from './components/partner-create/partner-create.component';
@@ -27,7 +27,8 @@ import { PolicyFormComponent } from './components/policy-form/policy-form.compon
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

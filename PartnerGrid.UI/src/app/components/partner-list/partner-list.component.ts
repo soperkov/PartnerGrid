@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { PartnerService } from 'src/app/services/partner.service';
 import { Partner } from 'src/app/models/partner.model';
 import { PartnerDetailComponent } from '../partner-detail/partner-detail.component';
@@ -16,7 +17,10 @@ export class PartnerListComponent implements OnInit {
 
   @ViewChild(PartnerDetailComponent) partnerDetailComponent!: PartnerDetailComponent;
 
-  constructor(private partnerService: PartnerService) { }
+  constructor(
+    private partnerService: PartnerService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.loadPartners();
@@ -40,7 +44,7 @@ export class PartnerListComponent implements OnInit {
   }
 
   navigateToCreatePartner(): void {
-    console.log('Navigating to create partner form...');
+    this.router?.navigate(['/partners/create']);
   }
 
   openPolicyDialog(): void {
