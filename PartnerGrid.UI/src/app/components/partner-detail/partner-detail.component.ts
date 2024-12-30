@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { PartnerService } from 'src/app/services/partner.service';
 import { Partner } from 'src/app/models/partner.model';
+import * as bootstrap from "bootstrap";
 import $ from 'jquery';
 
 
@@ -17,12 +16,18 @@ export class PartnerDetailComponent {
   @Input() partner: Partner | null = null;
 
   openModal(): void {
-    const modalElement = $('#partnerDetailModal') as any;
-    modalElement.modal('show');
+    const modalElement = document.getElementById('partnerDetailModal');
+    if (modalElement) {
+      modalElement.classList.add('show');
+      modalElement.style.display = 'block';
+    }
   }
 
   closeModal(): void {
-    const modalElement = $('#partnerDetailModal') as any;
-    modalElement.modal('hide');
+    const modalElement = document.getElementById('partnerDetailModal');
+    if (modalElement) {
+      modalElement.classList.remove('show');
+      modalElement.style.display = 'none';
+    }
   }
 }
