@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.IdentityModel.Tokens;
 using PartnerGrid.Models;
 
 namespace PartnerGrid.Validators
@@ -42,8 +43,9 @@ namespace PartnerGrid.Validators
             RuleFor(partner => partner.IsForeign)
                 .NotNull().WithMessage("Partner must be either foreign or local.");
 
-            RuleFor(partner => partner.ExternalCode.Length)
-                .InclusiveBetween(10, 20).WithMessage("External code must be between 10 and 20 characters.");
+            RuleFor(partner => partner.ExternalCode)
+                .Length(10, 20).WithMessage("External code must be between 10 and 20 characters.")
+                .Unless(partner => string.IsNullOrEmpty(partner.ExternalCode));
 
             RuleFor(partner => partner.Gender)
                 .Cascade(CascadeMode.Stop)

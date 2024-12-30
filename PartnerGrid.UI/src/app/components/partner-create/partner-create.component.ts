@@ -49,7 +49,7 @@ export class PartnerCreateComponent implements OnInit {
         ]
       ],
       croatianPin: [
-        '',
+        null,
         Validators.pattern(ValidationRules.croatianPin.pattern)
       ],
       partnerTypeId: ['', Validators.required],
@@ -63,7 +63,7 @@ export class PartnerCreateComponent implements OnInit {
       ],
       isForeign: ['', Validators.required],
       externalCode: [
-        { value: '', disabled: true },
+        { value: null, disabled: true },
         [
           Validators.minLength(ValidationRules.externalCode.minlength),
           Validators.maxLength(ValidationRules.externalCode.maxlength),

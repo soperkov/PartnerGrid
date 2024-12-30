@@ -46,7 +46,7 @@ namespace PartnerGrid
 
             app.UseSwagger();
             app.UseSwaggerUI();
-            app.UseCors("AllowAngular");
+            app.UseCors(policy => policy.AllowAnyHeader());
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

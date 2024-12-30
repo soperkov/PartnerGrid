@@ -12,7 +12,7 @@
 
         public string PartnerNumber { get; set; }
 
-        public string CroatianPin { get; set; }
+        public string? CroatianPin { get; set; }
 
         public int PartnerTypeId { get; set; }
 
@@ -22,7 +22,7 @@
 
         public bool IsForeign { get; set; }
 
-        public string ExternalCode { get; set; }
+        public string? ExternalCode { get; set; }
 
         public int PolicyCount { get; set; }
 

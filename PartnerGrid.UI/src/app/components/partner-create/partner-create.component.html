@@ -1,206 +1,211 @@
-<div class="container mt-4">
-  <h2>Create Partner</h2>
-  <form [formGroup]="partnerForm" (ngSubmit)="submitPartnerForm()" novalidate>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8 col-sm-10">
+      <h2 class="text-center mb-4">Create Partner</h2>
+      <form [formGroup]="partnerForm" (ngSubmit)="submitPartnerForm()" novalidate class="p-4 border rounded shadow-sm bg-light">
 
-    <!-- First Name -->
-    <div class="form-group">
-      <label for="firstName">First Name</label>
-      <input type="text"
-             id="firstName"
-             class="form-control"
-             formControlName="firstName" />
-      <small class="text-danger"
-             *ngIf="partnerForm.get('firstName')?.touched && partnerForm.get('firstName')?.errors">
-        <span *ngIf="partnerForm.get('firstName')?.errors?.['required']">
-          {{ ValidationRules.firstName.message.required }}
-        </span>
-        <span *ngIf="partnerForm.get('firstName')?.errors?.['minlength']">
-          {{ ValidationRules.firstName.message.minlength }}
-        </span>
-        <span *ngIf="partnerForm.get('firstName')?.errors?.['maxlength']">
-          {{ ValidationRules.firstName.message.maxlength }}
-        </span>
-      </small>
+        <!-- First Name -->
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input type="text"
+                 id="firstName"
+                 class="form-control"
+                 formControlName="firstName"
+                 placeholder="Enter first name" />
+          <small class="text-danger" *ngIf="partnerForm.get('firstName')?.touched && partnerForm.get('firstName')?.errors">
+            <span *ngIf="partnerForm.get('firstName')?.errors?.['required']">
+              {{ ValidationRules.firstName.message.required }}
+            </span>
+            <span *ngIf="partnerForm.get('firstName')?.errors?.['minlength']">
+              {{ ValidationRules.firstName.message.minlength }}
+            </span>
+            <span *ngIf="partnerForm.get('firstName')?.errors?.['maxlength']">
+              {{ ValidationRules.firstName.message.maxlength }}
+            </span>
+          </small>
+        </div>
+
+        <!-- Last Name -->
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input type="text"
+                 id="lastName"
+                 class="form-control"
+                 formControlName="lastName"
+                 placeholder="Enter last name" />
+          <small class="text-danger" *ngIf="partnerForm.get('lastName')?.touched && partnerForm.get('lastName')?.errors">
+            <span *ngIf="partnerForm.get('lastName')?.errors?.['required']">
+              {{ ValidationRules.lastName.message.required }}
+            </span>
+            <span *ngIf="partnerForm.get('lastName')?.errors?.['minlength']">
+              {{ ValidationRules.lastName.message.minlength }}
+            </span>
+            <span *ngIf="partnerForm.get('lastName')?.errors?.['maxlength']">
+              {{ ValidationRules.lastName.message.maxlength }}
+            </span>
+          </small>
+        </div>
+
+        <!-- Address -->
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input type="text"
+                 id="address"
+                 class="form-control"
+                 formControlName="address"
+                 placeholder="Enter address" />
+        </div>
+
+        <!-- Partner Number -->
+        <div class="form-group">
+          <label for="partnerNumber">Partner Number</label>
+          <input type="text"
+                 id="partnerNumber"
+                 class="form-control"
+                 formControlName="partnerNumber"
+                 placeholder="Enter partner number" />
+          <small class="text-danger" *ngIf="partnerForm.get('partnerNumber')?.touched && partnerForm.get('partnerNumber')?.errors">
+            <span *ngIf="partnerForm.get('partnerNumber')?.errors?.['required']">
+              {{ ValidationRules.partnerNumber.message.required }}
+            </span>
+            <span *ngIf="partnerForm.get('partnerNumber')?.errors?.['pattern']">
+              {{ ValidationRules.partnerNumber.message.pattern }}
+            </span>
+          </small>
+        </div>
+
+        <!-- Croatian PIN -->
+        <div class="form-group">
+          <label for="croatianPin">Croatian PIN (OIB)</label>
+          <input type="text"
+                 id="croatianPin"
+                 class="form-control"
+                 formControlName="croatianPin"
+                 placeholder="Enter Croatian PIN" />
+          <small class="text-danger" *ngIf="partnerForm.get('croatianPin')?.touched && partnerForm.get('croatianPin')?.errors">
+            <span *ngIf="partnerForm.get('croatianPin')?.errors?.['pattern']">
+              {{ ValidationRules.croatianPin.message.pattern }}
+            </span>
+          </small>
+        </div>
+
+        <!-- Partner Type -->
+        <div class="form-group">
+          <label>Partner Type</label>
+          <div class="form-check">
+            <input type="radio"
+                   id="typePersonal"
+                   class="form-check-input"
+                   value="1"
+                   formControlName="partnerTypeId" />
+            <label for="typePersonal" class="form-check-label">Personal</label>
+          </div>
+          <div class="form-check">
+            <input type="radio"
+                   id="typeLegal"
+                   class="form-check-input"
+                   value="2"
+                   formControlName="partnerTypeId" />
+            <label for="typeLegal" class="form-check-label">Legal</label>
+          </div>
+        </div>
+
+        <!-- Create By User -->
+        <div class="form-group">
+          <label for="createByUser">Email</label>
+          <input type="email"
+                 id="createByUser"
+                 class="form-control"
+                 formControlName="createByUser"
+                 placeholder="Enter email" />
+          <small class="text-danger" *ngIf="partnerForm.get('createByUser')?.touched && partnerForm.get('createByUser')?.errors">
+            <span *ngIf="partnerForm.get('createByUser')?.errors?.['required']">
+              {{ ValidationRules.createByUser.message.required }}
+            </span>
+            <span *ngIf="partnerForm.get('createByUser')?.errors?.['pattern']">
+              {{ ValidationRules.createByUser.message.pattern }}
+            </span>
+            <span *ngIf="partnerForm.get('createByUser')?.errors?.['maxlength']">
+              {{ ValidationRules.createByUser.message.maxlength }}
+            </span>
+          </small>
+        </div>
+
+        <!-- Is Foreign -->
+        <div class="form-group">
+          <label>Is Foreign</label>
+          <div class="form-check">
+            <input type="radio"
+                   id="foreignYes"
+                   class="form-check-input"
+                   value="true"
+                   formControlName="isForeign" />
+            <label for="foreignYes" class="form-check-label">Yes</label>
+          </div>
+          <div class="form-check">
+            <input type="radio"
+                   id="foreignNo"
+                   class="form-check-input"
+                   value="false"
+                   formControlName="isForeign" />
+            <label for="foreignNo" class="form-check-label">No</label>
+          </div>
+        </div>
+
+        <!-- External Code -->
+        <div class="form-group">
+          <label for="externalCode">External Code</label>
+          <input type="text"
+                 id="externalCode"
+                 class="form-control"
+                 formControlName="externalCode"
+                 placeholder="Enter external code" />
+          <small class="text-danger" *ngIf="partnerForm.get('externalCode')?.touched && partnerForm.get('externalCode')?.errors">
+            <span *ngIf="partnerForm.get('externalCode')?.errors?.['minlength']">
+              {{ ValidationRules.externalCode.message.minlength }}
+            </span>
+            <span *ngIf="partnerForm.get('externalCode')?.errors?.['maxlength']">
+              {{ ValidationRules.externalCode.message.maxlength }}
+            </span>
+          </small>
+        </div>
+
+        <!-- Gender -->
+        <div class="form-group">
+          <label>Gender</label>
+          <div class="form-check">
+            <input type="radio"
+                   id="genderMale"
+                   class="form-check-input"
+                   value="M"
+                   formControlName="gender" />
+            <label for="genderMale" class="form-check-label">Male</label>
+          </div>
+          <div class="form-check">
+            <input type="radio"
+                   id="genderFemale"
+                   class="form-check-input"
+                   value="F"
+                   formControlName="gender" />
+            <label for="genderFemale" class="form-check-label">Female</label>
+          </div>
+          <div class="form-check">
+            <input type="radio"
+                   id="genderNonBinary"
+                   class="form-check-input"
+                   value="N"
+                   formControlName="gender" />
+            <label for="genderNonBinary" class="form-check-label">Non-binary</label>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit"
+                class="btn btn-primary w-100 mt-4"
+                [disabled]="partnerForm.invalid">
+          Submit
+        </button>
+      </form>
     </div>
-
-    <!-- Last Name -->
-    <div class="form-group">
-      <label for="lastName">Last Name</label>
-      <input type="text"
-             id="lastName"
-             class="form-control"
-             formControlName="lastName" />
-      <small class="text-danger"
-             *ngIf="partnerForm.get('lastName')?.touched && partnerForm.get('lastName')?.errors">
-        <span *ngIf="partnerForm.get('lastName')?.errors?.['required']">
-          {{ ValidationRules.lastName.message.required }}
-        </span>
-        <span *ngIf="partnerForm.get('lastName')?.errors?.['minlength']">
-          {{ ValidationRules.lastName.message.minlength }}
-        </span>
-        <span *ngIf="partnerForm.get('lastName')?.errors?.['maxlength']">
-          {{ ValidationRules.lastName.message.maxlength }}
-        </span>
-      </small>
-    </div>
-
-    <!-- Address -->
-    <div class="form-group">
-      <label for="address">Address</label>
-      <input type="text"
-             id="address"
-             class="form-control"
-             formControlName="address" />
-    </div>
-
-    <!-- Partner Number -->
-    <div class="form-group">
-      <label for="partnerNumber">Partner Number</label>
-      <input type="text"
-             id="partnerNumber"
-             class="form-control"
-             formControlName="partnerNumber" />
-      <small class="text-danger"
-             *ngIf="partnerForm.get('partnerNumber')?.touched && partnerForm.get('partnerNumber')?.errors">
-        <span *ngIf="partnerForm.get('partnerNumber')?.errors?.['required']">
-          {{ ValidationRules.partnerNumber.message.required }}
-        </span>
-        <span *ngIf="partnerForm.get('partnerNumber')?.errors?.['pattern']">
-          {{ ValidationRules.partnerNumber.message.pattern }}
-        </span>
-      </small>
-    </div>
-
-    <!-- Croatian PIN -->
-    <div class="form-group">
-      <label for="croatianPin">Croatian PIN (OIB)</label>
-      <input type="text"
-             id="croatianPin"
-             class="form-control"
-             formControlName="croatianPin" />
-      <small class="text-danger"
-             *ngIf="partnerForm.get('croatianPin')?.touched && partnerForm.get('croatianPin')?.errors">
-        <span *ngIf="partnerForm.get('croatianPin')?.errors?.['pattern']">
-          {{ ValidationRules.croatianPin.message.pattern }}
-        </span>
-      </small>
-    </div>
-
-    <!-- Partner Type -->
-    <div class="form-group">
-      <label>Partner Type</label>
-      <div>
-        <input type="radio"
-               id="typePersonal"
-               class="mr-2"
-               value="1"
-               formControlName="partnerTypeId" />
-        <label for="typePersonal">Personal</label>
-      </div>
-      <div>
-        <input type="radio"
-               id="typeLegal"
-               class="mr-2"
-               value="2"
-               formControlName="partnerTypeId" />
-        <label for="typeLegal">Legal</label>
-      </div>
-    </div>
-
-    <!-- Create By User -->
-    <div class="form-group">
-      <label for="createByUser">Email</label>
-      <input type="email"
-             id="createByUser"
-             class="form-control"
-             formControlName="createByUser" />
-      <small class="text-danger"
-             *ngIf="partnerForm.get('createByUser')?.touched && partnerForm.get('createByUser')?.errors">
-        <span *ngIf="partnerForm.get('createByUser')?.errors?.['required']">
-          {{ ValidationRules.createByUser.message.required }}
-        </span>
-        <span *ngIf="partnerForm.get('createByUser')?.errors?.['pattern']">
-          {{ ValidationRules.createByUser.message.pattern }}
-        </span>
-        <span *ngIf="partnerForm.get('createByUser')?.errors?.['maxlength']">
-          {{ ValidationRules.createByUser.message.maxlength }}
-        </span>
-      </small>
-    </div>
-
-    <!-- Is Foreign -->
-    <div class="form-group">
-      <label>Is Foreign</label>
-      <div>
-        <input type="radio"
-               id="foreignYes"
-               value="true"
-               class="mr-2"
-               formControlName="isForeign" />
-        <label for="foreignYes">Yes</label>
-      </div>
-      <div>
-        <input type="radio"
-               id="foreignNo"
-               class="mr-2"
-               value="false"
-               formControlName="isForeign" />
-        <label for="foreignNo">No</label>
-      </div>
-    </div>
-
-    <!-- External Code -->
-    <div class="form-group">
-      <label for="externalCode">External Code</label>
-      <input type="text"
-             id="externalCode"
-             class="form-control"
-             formControlName="externalCode" />
-      <small class="text-danger"
-             *ngIf="partnerForm.get('externalCode')?.touched && partnerForm.get('externalCode')?.errors">
-        <span *ngIf="partnerForm.get('externalCode')?.errors?.['minlength']">
-          {{ ValidationRules.externalCode.message.minlength }}
-        </span>
-        <span *ngIf="partnerForm.get('externalCode')?.errors?.['maxlength']">
-          {{ ValidationRules.externalCode.message.maxlength }}
-        </span>
-      </small>
-    </div>
-
-    <!-- Gender -->
-    <div class="form-group">
-      <label>Gender</label>
-      <div>
-        <input type="radio"
-               id="genderMale"
-               class="mr-2"
-               value="M"
-               formControlName="gender" />
-        <label for="genderMale">Male</label>
-      </div>
-      <div>
-        <input type="radio"
-               id="genderFemale"
-               class="mr-2"
-               value="F"
-               formControlName="gender" />
-        <label for="genderFemale">Female</label>
-      </div>
-      <div>
-        <input type="radio"
-               id="genderNonBinary"
-               class="mr-2"
-               value="N"
-               formControlName="gender" />
-        <label for="genderNonBinary">Non-binary</label>
-      </div>
-    </div>
-
-    <!-- Submit Button -->
-    <button type="submit"
-            class="btn btn-primary mt-3"
-            [disabled]="partnerForm.invalid">
-      Submit
-    </button>
-  </form>
+  </div>
 </div>
