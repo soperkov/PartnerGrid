@@ -1,7 +1,6 @@
 <div class="container mt-4">
   <div class="d-flex justify-content-between mb-3">
     <button class="btn btn-primary" (click)="navigateToCreatePartner()">Add New Partner</button>
-    <button class="btn btn-secondary" (click)="openPolicyDialog()">Add Policy</button>
   </div>
 
   <table class="table table-striped table-bordered">
@@ -14,12 +13,13 @@
         <th>Time created</th>
         <th>Is Foreign</th>
         <th>Gender</th>
-        <th>Actions</th>
+        <th style="width: 15%;">Actions</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let partner of partners"
-          [ngClass]="{'table-warning': partner.policyCount > 5 || partner.totalPolicyAmount > 5000}"
+          [ngClass]="{'table-warning': partner.policyCount > 5 || partner.totalPolicyAmount > 5000,
+          'table-success': partner.partnerId === highlightedPartnerId}"
           (click)="showDetails(partner)">
         <td>
           <span *ngIf="partner.policyCount > 5 || partner.totalPolicyAmount > 5000">*</span>
@@ -32,7 +32,10 @@
         <td>{{ partner.isForeign === false ? 'Not foreign' : 'Foreign' }}</td>
         <td>{{ partner.gender }}</td>
         <td>
-          <button class="btn btn-info btn-sm" (click)="editPartner(partner)">Edit</button>
+          <button class="btn btn-secondary btn-sm"
+                  (click)="openPolicyDialog(partner, $event)">
+            Add Policy
+          </button>
           <button class="btn btn-danger btn-sm" (click)="deletePartner(partner.partnerId, $event)">Delete</button>
         </td>
       </tr>
@@ -40,4 +43,9 @@
   </table>
 
   <app-partner-detail [partner]="selectedPartner"></app-partner-detail>
+  <app-policy-form #policyFormComponent
+                   [partnerId]="selectedPartnerId"
+                   [partnerFullName]="selectedPartner?.fullName"
+                   (policySubmitted)="refreshPartners()">
+  </app-policy-form>
 </div>

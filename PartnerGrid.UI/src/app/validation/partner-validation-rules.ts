@@ -1,6 +1,6 @@
 import { MinLengthValidator } from "@angular/forms";
 
-export const ValidationRules = {
+export const PartnerValidationRules = {
   firstName: {
     required: true,
     minlength: 2,

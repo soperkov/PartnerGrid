@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ValidationRules } from 'src/app/validation/validation-rules';
+import { PartnerValidationRules } from 'src/app/validation/partner-validation-rules';
 import { PartnerService } from 'src/app/services/partner.service';
 import { Partner } from 'src/app/models/partner.model';
 
@@ -14,7 +14,7 @@ import { Partner } from 'src/app/models/partner.model';
 })
 export class PartnerCreateComponent implements OnInit {
   partnerForm!: FormGroup;
-  ValidationRules = ValidationRules;
+  PartnerValidationRules = PartnerValidationRules;
 
   constructor(
     private fb: FormBuilder,
@@ -28,16 +28,16 @@ export class PartnerCreateComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.minLength(ValidationRules.firstName.minlength),
-          Validators.maxLength(ValidationRules.firstName.maxlength)
+          Validators.minLength(PartnerValidationRules.firstName.minlength),
+          Validators.maxLength(PartnerValidationRules.firstName.maxlength)
         ]
       ],
       lastName: [
         '',
         [
           Validators.required,
-          Validators.minLength(ValidationRules.lastName.minlength),
-          Validators.maxLength(ValidationRules.lastName.maxlength)
+          Validators.minLength(PartnerValidationRules.lastName.minlength),
+          Validators.maxLength(PartnerValidationRules.lastName.maxlength)
         ]
       ],
       address: [''],
@@ -45,28 +45,28 @@ export class PartnerCreateComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern(ValidationRules.partnerNumber.pattern)
+          Validators.pattern(PartnerValidationRules.partnerNumber.pattern)
         ]
       ],
       croatianPin: [
         null,
-        Validators.pattern(ValidationRules.croatianPin.pattern)
+        Validators.pattern(PartnerValidationRules.croatianPin.pattern)
       ],
       partnerTypeId: ['', Validators.required],
       createByUser: [
         '',
         [
           Validators.required,
-          Validators.maxLength(ValidationRules.createByUser.maxlength),
-          Validators.pattern(ValidationRules.createByUser.pattern)
+          Validators.maxLength(PartnerValidationRules.createByUser.maxlength),
+          Validators.pattern(PartnerValidationRules.createByUser.pattern)
         ]
       ],
       isForeign: ['', Validators.required],
       externalCode: [
         { value: null, disabled: true },
         [
-          Validators.minLength(ValidationRules.externalCode.minlength),
-          Validators.maxLength(ValidationRules.externalCode.maxlength),
+          Validators.minLength(PartnerValidationRules.externalCode.minlength),
+          Validators.maxLength(PartnerValidationRules.externalCode.maxlength),
         ],
       ],
       gender: ['', Validators.required]

@@ -1,6 +1,10 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { Policy } from 'src/app/models/policy.model';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router'
+import { PolicyValidationRules } from 'src/app/validation/policy-validation-rules';
 import { PolicyService } from 'src/app/services/policy.service';
+import { Partner } from 'src/app/models/partner.model';
+import $ from 'jquery';
 
 @Component({
   selector: 'app-policy-form',
@@ -11,39 +15,77 @@ import { PolicyService } from 'src/app/services/policy.service';
 })
 export class PolicyFormComponent implements OnInit {
 
-  @Input() partnerId!: number;
-  @Input() policy: Policy | null = null;
-  @Output() submittedForm = new EventEmitter<void>();
+  @Input() partnerId!: number | null;
+  @Input() partnerFullName!: string | undefined;
+  @Output() policySubmitted = new EventEmitter<void>();
 
-  policyNumber = '';
-  policyAmount!: number;
+  policyForm!: FormGroup;
+  PolicyValidationRules = PolicyValidationRules;
 
-  constructor(private policyService: PolicyService) { }
+  constructor(
+    private fb: FormBuilder,
+    private policyService: PolicyService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
-    if (this.policy) {
-      this.policyNumber = this.policy.policyNumber;
-      this.policyAmount = this.policy.policyAmount;
+    this.policyForm = this.fb.group({
+      policyNumber: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(PolicyValidationRules.policyNumber.minlength),
+          Validators.maxLength(PolicyValidationRules.policyNumber.maxlength)
+        ]
+      ],
+      policyAmount: [
+        '',
+        [
+          Validators.required,
+          Validators.min(0.01) 
+        ]
+      ]
+    });
+  }
+
+  openModal(): void {
+    const modalElement = document.getElementById('policyFormModal');
+    if (modalElement) {
+      modalElement.classList.add('show');
+      modalElement.style.display = 'block';
     }
   }
 
-  savePolicy(): void {
-    const newPolicy: Policy = {
-      policyId: this.policy?.policyId || 0,
-      partnerId: this.partnerId,
-      policyNumber: this.policyNumber,
-      policyAmount: this.policyAmount,
-    };
+  closeModal(): void {
+    const modalElement = document.getElementById('policyFormModal');
+    if (modalElement) {
+      modalElement.classList.remove('show');
+      modalElement.style.display = 'none';
+    }
+  }
 
-    if (this.policy) {
-      this.policyService.updatePolicy(this.policy.policyId, newPolicy).subscribe(() => {
-        this.submittedForm.emit();
+  submitPolicyForm(): void {
+    if (this.policyForm.valid && this.partnerId) {
+      const policy = {
+        ...this.policyForm.value,
+        partnerId: this.partnerId,
+      };
+
+      this.policyService.createPolicy(policy).subscribe({
+        next: () => {
+          this.policySubmitted.emit(); 
+          this.closeModal();
+        },
+        error: (error) => {
+          console.error('Error creating policy:', error);
+        },
       });
     } else {
-      this.policyService.createPolicy(newPolicy).subscribe(() => {
-        this.submittedForm.emit();
-      });
+      console.error('Form is invalid or partner is missing');
     }
   }
 
+  cancel(): void {
+    this.router.navigate(['/partners']);
+  }
 }

@@ -14,13 +14,13 @@
                  placeholder="Enter first name" />
           <small class="text-danger" *ngIf="partnerForm.get('firstName')?.touched && partnerForm.get('firstName')?.errors">
             <span *ngIf="partnerForm.get('firstName')?.errors?.['required']">
-              {{ ValidationRules.firstName.message.required }}
+              {{ PartnerValidationRules.firstName.message.required }}
             </span>
             <span *ngIf="partnerForm.get('firstName')?.errors?.['minlength']">
-              {{ ValidationRules.firstName.message.minlength }}
+              {{ PartnerValidationRules.firstName.message.minlength }}
             </span>
             <span *ngIf="partnerForm.get('firstName')?.errors?.['maxlength']">
-              {{ ValidationRules.firstName.message.maxlength }}
+              {{ PartnerValidationRules.firstName.message.maxlength }}
             </span>
           </small>
         </div>
@@ -35,13 +35,13 @@
                  placeholder="Enter last name" />
           <small class="text-danger" *ngIf="partnerForm.get('lastName')?.touched && partnerForm.get('lastName')?.errors">
             <span *ngIf="partnerForm.get('lastName')?.errors?.['required']">
-              {{ ValidationRules.lastName.message.required }}
+              {{ PartnerValidationRules.lastName.message.required }}
             </span>
             <span *ngIf="partnerForm.get('lastName')?.errors?.['minlength']">
-              {{ ValidationRules.lastName.message.minlength }}
+              {{ PartnerValidationRules.lastName.message.minlength }}
             </span>
             <span *ngIf="partnerForm.get('lastName')?.errors?.['maxlength']">
-              {{ ValidationRules.lastName.message.maxlength }}
+              {{ PartnerValidationRules.lastName.message.maxlength }}
             </span>
           </small>
         </div>
@@ -66,10 +66,10 @@
                  placeholder="Enter partner number" />
           <small class="text-danger" *ngIf="partnerForm.get('partnerNumber')?.touched && partnerForm.get('partnerNumber')?.errors">
             <span *ngIf="partnerForm.get('partnerNumber')?.errors?.['required']">
-              {{ ValidationRules.partnerNumber.message.required }}
+              {{ PartnerValidationRules.partnerNumber.message.required }}
             </span>
             <span *ngIf="partnerForm.get('partnerNumber')?.errors?.['pattern']">
-              {{ ValidationRules.partnerNumber.message.pattern }}
+              {{ PartnerValidationRules.partnerNumber.message.pattern }}
             </span>
           </small>
         </div>
@@ -84,7 +84,7 @@
                  placeholder="Enter Croatian PIN" />
           <small class="text-danger" *ngIf="partnerForm.get('croatianPin')?.touched && partnerForm.get('croatianPin')?.errors">
             <span *ngIf="partnerForm.get('croatianPin')?.errors?.['pattern']">
-              {{ ValidationRules.croatianPin.message.pattern }}
+              {{ PartnerValidationRules.croatianPin.message.pattern }}
             </span>
           </small>
         </div>
@@ -120,13 +120,13 @@
                  placeholder="Enter email" />
           <small class="text-danger" *ngIf="partnerForm.get('createByUser')?.touched && partnerForm.get('createByUser')?.errors">
             <span *ngIf="partnerForm.get('createByUser')?.errors?.['required']">
-              {{ ValidationRules.createByUser.message.required }}
+              {{ PartnerValidationRules.createByUser.message.required }}
             </span>
             <span *ngIf="partnerForm.get('createByUser')?.errors?.['pattern']">
-              {{ ValidationRules.createByUser.message.pattern }}
+              {{ PartnerValidationRules.createByUser.message.pattern }}
             </span>
             <span *ngIf="partnerForm.get('createByUser')?.errors?.['maxlength']">
-              {{ ValidationRules.createByUser.message.maxlength }}
+              {{ PartnerValidationRules.createByUser.message.maxlength }}
             </span>
           </small>
         </div>
@@ -162,10 +162,10 @@
                  placeholder="Enter external code" />
           <small class="text-danger" *ngIf="partnerForm.get('externalCode')?.touched && partnerForm.get('externalCode')?.errors">
             <span *ngIf="partnerForm.get('externalCode')?.errors?.['minlength']">
-              {{ ValidationRules.externalCode.message.minlength }}
+              {{ PartnerValidationRules.externalCode.message.minlength }}
             </span>
             <span *ngIf="partnerForm.get('externalCode')?.errors?.['maxlength']">
-              {{ ValidationRules.externalCode.message.maxlength }}
+              {{ PartnerValidationRules.externalCode.message.maxlength }}
             </span>
           </small>
         </div>
