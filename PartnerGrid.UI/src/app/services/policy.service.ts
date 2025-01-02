@@ -13,7 +13,7 @@ export class PolicyService {
   constructor(private http: HttpClient) { }
 
   getPoliciesByPartner(partnerId: number): Observable<Policy[]> {
-    return this.http.get<Policy[]>(`${this.baseUrl}/Partner/${partnerId}`);
+    return this.http.get<Policy[]>(`${this.baseUrl}?partnerId=${partnerId}`);
   }
 
   createPolicy(policy: Policy): Observable<Policy> {

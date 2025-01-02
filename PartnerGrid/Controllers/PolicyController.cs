@@ -9,15 +9,16 @@ namespace PartnerGrid.Controllers
     [Route("api/[controller]")]
     public class PolicyController : ControllerBase
     {
-        private readonly IRepository<PolicyModel> _policyRepository;
+        private readonly IPolicyRepository _policyRepository;
 
-        public PolicyController(IRepository<PolicyModel> policyRepository)
+        public PolicyController(IPolicyRepository policyRepository)
         {
             _policyRepository = policyRepository;
         }
 
 
         [HttpGet]
+        [Route("")]
         public async Task<IActionResult> GetAll()
         {
             var policies = await _policyRepository.GetAllAsync();
@@ -25,14 +26,14 @@ namespace PartnerGrid.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById([FromQuery] int id)
         {
-            var policy = await _policyRepository.GetByIdAsync(id);
-            if (policy == null)
+            var policies = await _policyRepository.GetPoliciesByPartnerIdAsync(id);
+            if (policies == null || !policies.Any())
             {
                 return NotFound(new { Message = $"Policy with ID {id} not found." });
             }
-            return Ok(policy);
+            return Ok(policies);
         }
 
         [HttpPost]
@@ -47,41 +48,54 @@ namespace PartnerGrid.Controllers
             return CreatedAtAction(nameof(GetById), new { id = newPolicyId }, model);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] PolicyModel model)
-        {
-            if (id != model.PolicyId)
+        [HttpGet("partner/{partnerId:int}")] 
+        public async Task<IActionResult> GetPoliciesByPartnerId(int partnerId)
+        {            
+            var policies = await _policyRepository.GetPoliciesByPartnerIdAsync(partnerId);
+
+            if (policies == null || !policies.Any())
             {
-                return BadRequest(new { Message = "Policy ID mismatch." });
+                return NotFound(new { Message = $"No policies found for Partner ID {partnerId}." });
             }
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var existingPolicy = await _policyRepository.GetByIdAsync(id);
-            if (existingPolicy == null)
-            {
-                return NotFound(new { Message = $"Policy with ID {id} not found." });
-            }
-
-            await _policyRepository.UpdateAsync(model);
-            return NoContent();
+            return Ok(policies);
         }
 
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> Update(int id, [FromBody] PolicyModel model)
+        //{
+        //    if (id != model.PolicyId)
+        //    {
+        //        return BadRequest(new { Message = "Policy ID mismatch." });
+        //    }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var existingPolicy = await _policyRepository.GetByIdAsync(id);
-            if (existingPolicy == null)
-            {
-                return NotFound(new { Message = $"Policy with ID {id} not found." });
-            }
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            await _policyRepository.DeleteAsync(id);
-            return NoContent();
-        }
+        //    var existingPolicy = await _policyRepository.GetPoliciesByPartnerIdAsync(id);
+        //    if (existingPolicy == null)
+        //    {
+        //        return NotFound(new { Message = $"Policy with ID {id} not found." });
+        //    }
+
+        //    await _policyRepository.UpdateAsync(model);
+        //    return NoContent();
+        //}
+
+
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> Delete(int id)
+        //{
+        //    var existingPolicy = await _policyRepository.GetByIdAsync(id);
+        //    if (existingPolicy == null)
+        //    {
+        //        return NotFound(new { Message = $"Policy with ID {id} not found." });
+        //    }
+
+        //    await _policyRepository.DeleteAsync(id);
+        //    return NoContent();
+        //}
     }
 }

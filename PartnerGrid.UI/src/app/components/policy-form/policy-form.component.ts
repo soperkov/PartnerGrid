@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router'
 import { PolicyValidationRules } from 'src/app/validation/policy-validation-rules';
@@ -17,7 +17,6 @@ export class PolicyFormComponent implements OnInit {
 
   @Input() partnerId!: number | null;
   @Input() partnerFullName!: string | undefined;
-  @Output() policySubmitted = new EventEmitter<void>();
 
   policyForm!: FormGroup;
   PolicyValidationRules = PolicyValidationRules;
@@ -73,7 +72,6 @@ export class PolicyFormComponent implements OnInit {
 
       this.policyService.createPolicy(policy).subscribe({
         next: () => {
-          this.policySubmitted.emit(); 
           this.closeModal();
         },
         error: (error) => {

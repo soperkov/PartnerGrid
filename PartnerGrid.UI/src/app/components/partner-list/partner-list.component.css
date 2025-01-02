@@ -1,4 +1,4 @@
 .table-success {
-  font-weight: bold;
-  background-color: #d4edda;
+  font-weight: bold !important;
+  background-color: #d4edda !important;
 }

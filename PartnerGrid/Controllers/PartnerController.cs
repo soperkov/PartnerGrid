@@ -17,6 +17,7 @@ namespace PartnerGrid.Controllers
         }
 
         [HttpGet]
+        [Route("")]
         public async Task<IActionResult> GetAll()
         {
             var partners = await _partnerRepository.GetAllAsync();

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PartnerValidationRules } from 'src/app/validation/partner-validation-rules';
@@ -15,6 +15,7 @@ import { Partner } from 'src/app/models/partner.model';
 export class PartnerCreateComponent implements OnInit {
   partnerForm!: FormGroup;
   PartnerValidationRules = PartnerValidationRules;
+  @Output() partnerCreated = new EventEmitter<number>();
 
   constructor(
     private fb: FormBuilder,
@@ -89,8 +90,10 @@ export class PartnerCreateComponent implements OnInit {
     const payload = formValue;
 
     this.partnerService.createPartner(payload as Partner).subscribe({
-      next: () => {
-        this.router.navigate(['/partners']);
+      next: (createdPartner) => {
+        this.partnerCreated.emit(createdPartner.partnerId);
+        this.router.navigate(['/partners'],
+          { queryParams: { highlightId: createdPartner.partnerId }, });
       },
       error: (error) => {
         console.error('Error creating partner:', error);

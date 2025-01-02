@@ -24,7 +24,7 @@ namespace PartnerGrid
 
             builder.Services.AddScoped<IRepository<PartnerModel>, PartnerRepository>();
 
-            builder.Services.AddScoped<IRepository<PolicyModel>, PolicyRepository>();
+            builder.Services.AddScoped<IPolicyRepository, PolicyRepository>();
 
             builder.Services.AddValidatorsFromAssemblyContaining<PartnerValidator>();
 

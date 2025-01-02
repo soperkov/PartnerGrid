@@ -14,6 +14,7 @@
         <th>Is Foreign</th>
         <th>Gender</th>
         <th style="width: 15%;">Actions</th>
+        <th style="width: 10%">Policies</th>
       </tr>
     </thead>
     <tbody>
@@ -38,14 +39,21 @@
           </button>
           <button class="btn btn-danger btn-sm" (click)="deletePartner(partner.partnerId, $event)">Delete</button>
         </td>
+        <td>
+          <button class="btn btn-info btn-sm" (click)="viewPolicies(partner, $event)">
+            View All
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
 
-  <app-partner-detail [partner]="selectedPartner"></app-partner-detail>
-  <app-policy-form #policyFormComponent
+  <app-policy-list-modal
+                   #policyListModalComponent
                    [partnerId]="selectedPartnerId"
-                   [partnerFullName]="selectedPartner?.fullName"
-                   (policySubmitted)="refreshPartners()">
+                   [partnerFullName]= "selectedPartner?.fullName"></app-policy-list-modal>
+  <app-partner-detail [partner]="selectedPartner"></app-partner-detail>
+  <app-policy-form [partnerId]="selectedPartnerId"
+                   [partnerFullName]="selectedPartner?.fullName">
   </app-policy-form>
 </div>

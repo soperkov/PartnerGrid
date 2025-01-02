@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Policy } from 'src/app/models/policy.model';
 import { PolicyService } from 'src/app/services/policy.service';
 
@@ -9,44 +9,43 @@ import { PolicyService } from 'src/app/services/policy.service';
   templateUrl: './policy-list-modal.component.html',
   styleUrl: './policy-list-modal.component.css'
 })
-export class PolicyListModalComponent implements OnInit {
+export class PolicyListModalComponent {
 
-  @Input() partnerId!: number;
+  @Input() partnerId!: number | null;
+  @Input() partnerFullName!: string | undefined
   policies: Policy[] = [];
-  showModal = false;
 
   constructor(private policyService: PolicyService) { }
 
-  ngOnInit(): void {
-    if (this.partnerId) {
-      this.policyService.getPoliciesByPartner(this.partnerId).subscribe({
-        next: (data) => (this.policies = data),
-        error: (error) => console.error('Error fetching policies:', error),
-      });
+  private showModal(): void {
+    const modalElement = document.getElementById('policyListModal');
+    if (modalElement) {
+      modalElement.classList.add('show');
+      modalElement.style.display = 'block';
     }
-  }
-
-  openModal(): void {
-    this.showModal = true;
   }
 
   closeModal(): void {
-    this.showModal = false;
-  }
-
-  editPolicy(policy: Policy): void {
-    
-  }
-
-  deletePolicy(policyId: number): void {
-    if (confirm('Are you sure you want to delete this policy?')) {
-      this.policyService.deletePolicy(policyId).subscribe({
-        next: () => {
-          this.policies = this.policies.filter((policy) => policy.policyId !== policyId);
-          console.log('Policy deleted successfully.');
-        },
-        error: (error) => console.error('Error deleting policy:', error),
-      });
+    const modalElement = document.getElementById('policyListModal');
+    if (modalElement) {
+      modalElement.classList.remove('show');
+      modalElement.style.display = 'none';
     }
   }
+
+  openModalWithPolicies(partnerId: number, partnerFullName: string | undefined): void {
+    this.partnerId = partnerId;
+    this.partnerFullName = partnerFullName;
+
+    this.policyService.getPoliciesByPartner(partnerId).subscribe({
+      next: (data) => {
+        this.policies = data; 
+        this.showModal(); 
+      },
+      error: (error) => {
+        console.error('Error fetching policies for partner ID:', partnerId, error);
+      }
+    });
+  }
+
 }

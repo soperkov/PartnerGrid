@@ -4,7 +4,7 @@ using PartnerGrid.Models;
 
 namespace PartnerGrid.Databases
 {
-    public class PolicyRepository : IRepository<PolicyModel>
+    public class PolicyRepository : IPolicyRepository
     {
         private readonly DapperDbContext _dbContext;
 
@@ -30,6 +30,16 @@ namespace PartnerGrid.Databases
             using (var connection = _dbContext.CreateConnection())
             {
                 return await connection.QuerySingleOrDefaultAsync<PolicyModel>(query, new { PolicyId = policyId });
+            }
+        }
+
+        public async Task<IEnumerable<PolicyModel>> GetPoliciesByPartnerIdAsync(int partnerId)
+        {
+            var query = "SELECT * FROM Policies WHERE PartnerId = @PartnerId";
+
+            using (var connection = _dbContext.CreateConnection())
+            {
+                return await connection.QueryAsync<PolicyModel>(query, new { PartnerId = partnerId });
             }
         }
 

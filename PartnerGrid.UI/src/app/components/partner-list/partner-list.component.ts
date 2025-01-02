@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { PartnerService } from 'src/app/services/partner.service';
 import { Partner } from 'src/app/models/partner.model';
 import { PartnerDetailComponent } from '../partner-detail/partner-detail.component';
 import { PolicyFormComponent } from '../policy-form/policy-form.component';
+import { PolicyListModalComponent } from '../policy-list-modal/policy-list-modal.component';
 
 @Component({
   selector: 'app-partner-list',
@@ -20,14 +21,22 @@ export class PartnerListComponent implements OnInit {
 
   @ViewChild(PartnerDetailComponent) partnerDetailComponent!: PartnerDetailComponent;
   @ViewChild(PolicyFormComponent) policyFormComponent!: PolicyFormComponent;
+  @ViewChild(PolicyListModalComponent) policyListModalComponent!: PolicyListModalComponent;
+
 
 
   constructor(
     private partnerService: PartnerService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      this.highlightedPartnerId = params['highlightId'] ? +params['highlightId'] : null;
+    });
+    console.log('highlightedPartnerId:', this.highlightedPartnerId);
+
     this.loadPartners();
   }
 
@@ -39,6 +48,7 @@ export class PartnerListComponent implements OnInit {
           fullName: `${partner.firstName} ${partner.lastName}`
         }))
        .sort((a, b) => new Date(b.createdAtUtc).getTime() - new Date(a.createdAtUtc).getTime()); 
+      console.log('Loaded partners:', this.partners.map(p => p.partnerId));
       },
       error: (error) => console.error('Error fetching partners:', error)
     });
@@ -47,6 +57,11 @@ export class PartnerListComponent implements OnInit {
   refreshPartners(): void {
     this.loadPartners();
     this.highlightedPartnerId = this.selectedPartnerId; 
+  }
+
+  handlePartnerCreated(partnerId: number): void {
+    this.highlightedPartnerId = partnerId;
+    this.loadPartners();
   }
 
   showDetails(partner: Partner): void {
@@ -60,9 +75,16 @@ export class PartnerListComponent implements OnInit {
 
   openPolicyDialog(partner: Partner, event: Event): void {
     event.stopPropagation();
+    console.log("Opening policy list modal for:", partner);
     this.policyFormComponent.partnerId = partner.partnerId;
     this.policyFormComponent.partnerFullName = partner.fullName;
     this.policyFormComponent.openModal();  
+  }
+
+  viewPolicies(partner: Partner, event: Event): void {
+    event.stopPropagation();
+    console.log('Opening policy list modal for:', partner); 
+    this.policyListModalComponent.openModalWithPolicies(partner.partnerId, partner.fullName);
   }
 
   deletePartner(partnerId: number, event: Event): void {
