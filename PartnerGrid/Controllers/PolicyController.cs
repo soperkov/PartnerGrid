@@ -26,7 +26,7 @@ namespace PartnerGrid.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById([FromQuery] int id)
+        public async Task<IActionResult> GetById(int id)
         {
             var policies = await _policyRepository.GetPoliciesByPartnerIdAsync(id);
             if (policies == null || !policies.Any())
@@ -48,7 +48,7 @@ namespace PartnerGrid.Controllers
             return CreatedAtAction(nameof(GetById), new { id = newPolicyId }, model);
         }
 
-        [HttpGet("partner/{partnerId:int}")] 
+        [HttpGet("partner/{partnerId}")] 
         public async Task<IActionResult> GetPoliciesByPartnerId(int partnerId)
         {            
             var policies = await _policyRepository.GetPoliciesByPartnerIdAsync(partnerId);

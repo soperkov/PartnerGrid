@@ -44,6 +44,7 @@ namespace PartnerGrid.Controllers
             }
 
             var newPartnerId = await _partnerRepository.CreateAsync(model);
+            Console.WriteLine($"Created Partner ID: {newPartnerId}");
             return CreatedAtAction(nameof(GetById), new { id = newPartnerId }, model);
         }
 

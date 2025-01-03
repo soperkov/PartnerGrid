@@ -43,7 +43,8 @@ export class PolicyListModalComponent {
         this.showModal(); 
       },
       error: (error) => {
-        console.error('Error fetching policies for partner ID:', partnerId, error);
+        this.policies = []; 
+        this.showModal();
       }
     });
   }

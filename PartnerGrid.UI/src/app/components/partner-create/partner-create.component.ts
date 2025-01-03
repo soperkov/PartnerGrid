@@ -84,16 +84,15 @@ export class PartnerCreateComponent implements OnInit {
 
   submitPartnerForm(): void {
     const formValue = this.partnerForm.value;
-
     formValue.isForeign = formValue.isForeign === 'true';
-
     const payload = formValue;
 
     this.partnerService.createPartner(payload as Partner).subscribe({
       next: (createdPartner) => {
-        this.partnerCreated.emit(createdPartner.partnerId);
-        this.router.navigate(['/partners'],
-          { queryParams: { highlightId: createdPartner.partnerId }, });
+        console.log('Emitted partner:', createdPartner.partnerId);
+        this.router.navigate(['/partners'], {
+          queryParams: { highlightId: createdPartner.partnerId },
+        });
       },
       error: (error) => {
         console.error('Error creating partner:', error);

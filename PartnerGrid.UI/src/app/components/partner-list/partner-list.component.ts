@@ -5,6 +5,7 @@ import { Partner } from 'src/app/models/partner.model';
 import { PartnerDetailComponent } from '../partner-detail/partner-detail.component';
 import { PolicyFormComponent } from '../policy-form/policy-form.component';
 import { PolicyListModalComponent } from '../policy-list-modal/policy-list-modal.component';
+import { PartnerCreateComponent } from '../partner-create/partner-create.component';
 
 @Component({
   selector: 'app-partner-list',
@@ -23,22 +24,20 @@ export class PartnerListComponent implements OnInit {
   @ViewChild(PolicyFormComponent) policyFormComponent!: PolicyFormComponent;
   @ViewChild(PolicyListModalComponent) policyListModalComponent!: PolicyListModalComponent;
 
-
-
   constructor(
     private partnerService: PartnerService,
     private router: Router,
     private route: ActivatedRoute
   ) { }
 
-  ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
-      this.highlightedPartnerId = params['highlightId'] ? +params['highlightId'] : null;
-    });
+ngOnInit(): void {
+  this.route.queryParams.subscribe((params) => {
+    this.highlightedPartnerId = params['highlightId'] ? +params['highlightId'] : null;
     console.log('highlightedPartnerId:', this.highlightedPartnerId);
+  });
 
-    this.loadPartners();
-  }
+  this.loadPartners();
+}
 
   loadPartners(): void {
     this.partnerService.getAllPartners().subscribe({
@@ -54,12 +53,13 @@ export class PartnerListComponent implements OnInit {
     });
   }
 
-  refreshPartners(): void {
-    this.loadPartners();
-    this.highlightedPartnerId = this.selectedPartnerId; 
-  }
+  //refreshPartners(): void {
+  //  this.loadPartners();
+  //  this.highlightedPartnerId = this.selectedPartnerId; 
+  //}
 
   handlePartnerCreated(partnerId: number): void {
+    console.log('Handling Partner Created, ID:', partnerId);
     this.highlightedPartnerId = partnerId;
     this.loadPartners();
   }
@@ -83,7 +83,6 @@ export class PartnerListComponent implements OnInit {
 
   viewPolicies(partner: Partner, event: Event): void {
     event.stopPropagation();
-    console.log('Opening policy list modal for:', partner); 
     this.policyListModalComponent.openModalWithPolicies(partner.partnerId, partner.fullName);
   }
 
