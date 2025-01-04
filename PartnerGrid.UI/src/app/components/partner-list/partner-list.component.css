@@ -3,6 +3,10 @@
   background-color: #d4edda !important;
 }
 
+.table-responsive {
+    width: fit-content !important;
+}
+
 .table-hover thead th {
   background-color: #2c2f33;
   color: #ffffff;

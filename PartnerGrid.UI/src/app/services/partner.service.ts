@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Partner } from '../models/partner.model';
 
 @Injectable({
@@ -21,8 +22,10 @@ export class PartnerService {
   }
 
   createPartner(partner: Partner): Observable<Partner> {
-    const { partnerId, ...payload } = partner; 
-    return this.http.post<Partner>(`${this.baseUrl}`, payload);
+    const { partnerId, ...payload } = partner;
+    return this.http.post<{ id: number }>(`${ this.baseUrl }`, payload).pipe(
+      map(response => ({ ...partner, partnerId: response.id }))
+    );
   }
 
   updatePartner(id: number, partner: Partner): Observable<void> {
