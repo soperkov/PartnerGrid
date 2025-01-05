@@ -1,0 +1,17 @@
+function PayParking(user, entranceTime, exitTime, type):
+	//calculate total parking time
+	totalTime = exitTime - entranceTime
+	
+	//calculate discount time
+	discount = 1
+	//fetch rain time from api
+	if "uncovered":
+		discount = CalculateDiscount(totalTime, GetWeatherApiRain(entranceTime, exitTime))
+	if someOtherFactor:
+		discount = CalculateDiscount(totalTime, someOtherFactor)
+	
+	//get final price
+	finalPrice = CalculateBasePrice(totalTime) * discount
+	
+	//card payment/cash processing
+	ProcessPayment(user, finalPrice)

@@ -1,0 +1,11 @@
+function GetFreeSpaces():
+	totalFreeSpaces = some number
+	
+	//searching and displaying a number of parking spots unavailable
+	//and then subtracting from total free spaces
+	//there are contract and normal users here
+	for each user in userDatabase:
+		unavailableSpaces = CountCurrentUsers()
+		totalFreeSpaces -= unavailableSpaces
+		
+	return totalFreeSpaces

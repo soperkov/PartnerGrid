@@ -1,0 +1,20 @@
+function EnterParking(licensePlate, GetFreeSpaces()):
+	//you can either wait for a parking space or you can leave parking
+	if GetFreeSpaces() == 0:
+		return
+		
+	//if user has a contract	
+	if OnContract():
+		openRamp()
+		return
+	
+	entryTime = getCurrentTime()
+	
+	//id is autoincrement, adding userId and licensePlate to database for paying parking
+	updateDatabase(user {licensePlate, entryTime})
+	
+	//automatically decrease freeSpaces
+	SetFreeSpaces(GetFreeSpaces() - 1)
+	
+	openRamp()
+	return

@@ -1,0 +1,7 @@
+function CalculateBasePrice(totalTime):
+	//price per hour is a constant
+	pricePerHour = **
+	
+	//math floor to round time to a higher number
+	return pricePerHour * Math.Floor(totalTime)
+	

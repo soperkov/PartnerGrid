@@ -1,0 +1,9 @@
+function CalculateDiscount(totalTime, rainTime = 0, ... //maybe other factors which are set to 0):
+	discount = 1
+	if rainTime > totalTime / 3:
+		discount = 0.5
+	
+	else if: 
+		//some other discount possibilities
+	
+	return discount

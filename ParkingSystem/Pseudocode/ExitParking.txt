@@ -1,0 +1,20 @@
+function ExitParking(user, timePaid):
+	currentTime = getCurrentTime()
+	
+	//if user has a contract
+	if OnContract():
+		openRamp()
+		return
+	
+	//if user didnt pay for parking 
+	if timePaid == 0:
+		return
+	
+	//if user didn't get to exit on time
+	else if currentTime.minutes - timePaid.minutes >= 10:
+		CalculateOverstayFee(user, currentTime, timePaid)
+	
+	SetFreeSpaces(GetFreeSpaces() + 1)
+	updateDatabase(delete user)
+	openRamp()
+	return

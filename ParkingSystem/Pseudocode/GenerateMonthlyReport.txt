@@ -1,0 +1,35 @@
+function GenerateMonthlyReport(month, year):
+	//there is space for adding more discounts
+	totalRevenue = 0
+	totalTransactions = 0
+	rainDiscountUsage = 0
+	capacityUtilization = 0
+	
+	//fetch monthly transactions from database
+	transactions = GetTransactionsForMonth(month, year)
+	
+	for each transaction in transactions:
+        totalRevenue += transaction.totalFee
+        totalTransactions += 1
+
+        //check if the transaction used a rain discount
+        if transaction.discount == 0.5:
+            rainDiscountUsage += 1
+			
+	//calculate capacity utilization
+    	capacityUtilization = CalculateCapacityUtilization(transactions)
+	
+	//preparing reports
+	report = {
+        "Month": month,
+        "Year": year,
+        "TotalRevenue": totalRevenue,
+        "TotalTransactions": totalTransactions,
+        "RainDiscountUsage": rainDiscountUsage,
+        "CapacityUtilization": capacityUtilization
+	}
+	
+	//if a report needs to be saved then
+	SaveReport()
+	
+	return report
