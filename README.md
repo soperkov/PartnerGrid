@@ -86,9 +86,10 @@ PartnerGrid/
 │   │   └── styles.css
 │   └── angular.json
 ├── ParkingSystem/  # Second Task
-│   ├── Diagrams/         # Workflow and system design diagrams
-│   ├── DatabaseSchema/   # SQL scripts for the database design
-│   └── Solution/         # Written pseudocode and solution
+│   ├── PDF/         # Diagrams in PDF format
+│   ├── Pseudocode/   # Files containing pseudocode for this project
+│   ├── SVG/         # Diagrams in SVG format
+│   └── Final database schema, diagram and solution
 └── README.md
 ```
 
