@@ -76,8 +76,9 @@ PartnerGrid/
 ├── PartnerGrid.API/  # API Backend
 │   ├── Controllers/  # API Controllers
 │   ├── Models/       # Data Models
-│   ├── Repositories/ # Database Access with Dapper
-│   ├── Databases/    # SQL scripts for the database
+│   ├── Interfaces/   # Interfaces for controllers
+│   ├── Databases/    # Database Access with Dapper and SQL scripts for the database
+│   ├── Validators/   # Validators for the API
 │   ├── appsettings.json
 │   └── Program.cs
 ├── PartnerGrid.UI/  # Angular Frontend
