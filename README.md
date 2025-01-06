@@ -31,7 +31,7 @@ Follow these steps to set up and run the application on your local machine:
 2. Update the `Server` name under the `ConnectionStrings` section to match your database server configuration:
    ```json
    "ConnectionStrings": {
-       "DefaultConnection": "Server=YOUR_SERVER_NAME;Database=PartnerGrid;Trusted_Connection=True;MultipleActiveResultSets=true"
+       "DefaultConnection": "Server=YOUR_SERVER_NAME;Database=PartnersPolicies;Trusted_Connection=True;MultipleActiveResultSets=true"
    }
 
 ---
