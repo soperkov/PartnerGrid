@@ -36,6 +36,37 @@ Follow these steps to set up and run the application on your local machine:
 
 ---
 
+### **Step 3: Run the Backend**
+
+1. Open the **PartnerGrid** project in your IDE.
+2. Ensure the database connection string in `appsettings.json` is configured correctly.
+3. Run the project.
+   - The backend server will start at: **http://localhost:7015**
+
+---
+
+### **Step 4: Run the Frontend**
+
+1. Navigate to the `PartnerGrid.UI` folder in your terminal.
+2. Install the dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the Angular development server:
+   ```bash
+   ng serve
+   ```
+- The frontend will be accessible at: **http://localhost:4200**
+
+---
+
+### **Step 5: Access the Application**
+
+1. Open your browser and navigate to **http://localhost:4200** to use the application.
+2. Ensure both the backend and frontend are running for full functionality.
+
+---
+
 ## Features
 
 ### Partner Management
@@ -99,7 +130,8 @@ PartnerGrid/
 ## Technologies Used
 
 - **Backend**: ASP.NET Core Web App
-- **Frontend**: Angular 19
-- **Database**: SQL Server
-- **ORM**: Dapper
-- **Styling**: Bootstrap 4
+- **Frontend**: Angular 19.0.6
+                Node 22.12.0
+- **Database**: SQL Server 10.50.4000.0
+- **ORM**: Dapper 2.1.35
+- **Styling**: Bootstrap 4.5.0
